@@ -1,0 +1,11 @@
+<b> index </b>
+<table>
+<% @myUser.each do |user| %>
+<tr>
+	<td><%= user.first_name %></td>
+    <td><%= user.Bio %></td>
+    
+</tr>
+
+<% end %>
+</table>
