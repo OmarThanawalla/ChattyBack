@@ -2,7 +2,7 @@ ChattyBackend::Application.routes.draw do
   
   #get "demo/index"
   root :to => "demo#index"
-  resources :user, :conversation, :message, :follow, :follower
+  resources :user, :conversation, :message, :follow, :follower, :my_conversation
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
