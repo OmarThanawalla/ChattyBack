@@ -1,1 +1,13 @@
 <b> show </b>
+
+<b> index </b>
+<p>Here is a list of messages with Conversation ID: <%= @convoID %> !!</p>
+
+<table border = "1">
+<% @messages.each do |message| %>
+<tr>
+<td>Message ID:<%= message.id %></td>
+<td><%= message.message_content %></td>
+</tr>
+<% end %>
+</table>

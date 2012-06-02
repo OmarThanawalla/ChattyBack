@@ -10,4 +10,11 @@ class User < ActiveRecord::Base
 	
 	validates :password, :length => { :in => 6..20 }
 	validates :Bio, :length => { :maximum => 160 }
+	
+	validates_presence_of :email,  :password, :first_name, :last_name
+	validates :email, :uniqueness => { :case_sensitive => false }
+	
+	#i just grabbed this from a website, not sure if it actually works lol
+	validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
+	
 end

@@ -1,11 +1,22 @@
 <b> index </b>
 <table>
-<% @myUser.each do |user| %>
 <tr>
+<td>ID</td>
+<td>First Name</td>
+<td>Last Name</td>
+<td> Email address</td>
+</tr>
+<% @allUser.each do |user| %>
+<tr>
+	<td><%= link_to user.id, :controller => "user", :action => "show", :id => user.id  %></td>
 	<td><%= user.first_name %></td>
-    <td><%= user.Bio %></td>
+    <td><%= user.last_name %></td>
+    <td><%= user.email %></td>
     
 </tr>
 
+
+
 <% end %>
 </table>
+<%= link_to "Create new user", :controller => "user", :action => "new" %>

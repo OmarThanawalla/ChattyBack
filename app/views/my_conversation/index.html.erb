@@ -1,4 +1,11 @@
 <b> index </b>
-<p>Here is a list of my conversations!</p>
+<p>Here is a list of my 20 most recent conversations!!</p>
 
-
+<table border = "1">
+<% @allConvo.each do |mostRecentMessage| %>
+<tr>
+<td>Conversation ID: <%= mostRecentMessage.conversation_id %></td>
+<td><%= mostRecentMessage.message_content %></td>
+</tr>
+<% end %>
+</table>
