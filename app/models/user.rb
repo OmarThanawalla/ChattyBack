@@ -1,3 +1,4 @@
+
 class User < ActiveRecord::Base
 	has_many :messages
 	has_many :conversations, :through => :user_conversation_mm_tables
@@ -8,7 +9,7 @@ class User < ActiveRecord::Base
 	has_many :followers, :foreign_key => "follower_id"
 	has_many :follows, :foreign_key => "follow_id"
 	
-	validates :password, :length => { :in => 6..20 }
+	validates :password, :length => { :in => 6..200 }
 	validates :Bio, :length => { :maximum => 160 }
 	
 	validates_presence_of :email,  :password, :first_name, :last_name
@@ -16,5 +17,18 @@ class User < ActiveRecord::Base
 	
 	#i just grabbed this from a website, not sure if it actually works lol
 	validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
+
+	############################################################################
+	#returns record if authenticated else returns false
+	def self.authenticate(email = "", incomingPassword = "")
+		myUser = User.find_by_email(email)
+		if myUser && myUser.password == incomingPassword
+			return myUser
+		else
+			return false
+		end
+	
+	end
+	############################################################################
 	
 end

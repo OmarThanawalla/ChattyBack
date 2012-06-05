@@ -1,4 +1,5 @@
 class ConversationController < ApplicationController
+before_filter :confirm_logged_in
 	def index
 
 

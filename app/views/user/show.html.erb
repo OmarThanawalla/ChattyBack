@@ -15,5 +15,9 @@
 <td><%= @myUser.email %></td>
 <td><%= @myUser.Bio %></td>
 
+
+
 </tr>
 </table>
+
+<%= link_to "Edit User", :controller => "user", :action => "edit", :id => params[:id] %>
