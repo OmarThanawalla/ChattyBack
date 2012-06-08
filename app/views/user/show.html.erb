@@ -9,11 +9,11 @@
 
 </tr>
 <tr>
-<td><%= @myUser.id %></td>
-<td><%= @myUser.first_name %></td>
-<td><%= @myUser.last_name %></td>
-<td><%= @myUser.email %></td>
-<td><%= @myUser.Bio %></td>
+<td><%= @user.id %></td>
+<td><%= @user.first_name %></td>
+<td><%= @user.last_name %></td>
+<td><%= @user.email %></td>
+<td><%= @user.Bio %></td>
 
 
 
@@ -21,3 +21,5 @@
 </table>
 
 <%= link_to "Edit User", :controller => "user", :action => "edit", :id => params[:id] %>
+
+<p><%= link_to "delete", :controller => "user", :action => "prompt", :id => @user.id  %></p>

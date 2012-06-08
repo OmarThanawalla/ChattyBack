@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120525193958) do
+ActiveRecord::Schema.define(:version => 20120608195133) do
 
   create_table "conversations", :force => true do |t|
     t.datetime "created_at"
@@ -41,6 +42,17 @@ ActiveRecord::Schema.define(:version => 20120525193958) do
     t.datetime "updated_at"
   end
 
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
+  add_index "roles", ["name"], :name => "index_roles_on_name"
+
   create_table "user_conversation_mm_tables", :force => true do |t|
     t.integer  "user_id"
     t.integer  "conversation_id"
@@ -49,14 +61,22 @@ ActiveRecord::Schema.define(:version => 20120525193958) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "first_name", :limit => 25,                   :null => false
-    t.string   "last_name",  :limit => 50,                   :null => false
-    t.string   "email",      :limit => 1000,                 :null => false
-    t.string   "password",   :limit => 40,                   :null => false
-    t.string   "Bio",        :limit => 140,  :default => ""
-    t.string   "pictureURL",                 :default => ""
+    t.string   "first_name",      :limit => 25,                   :null => false
+    t.string   "last_name",       :limit => 50,                   :null => false
+    t.string   "email",           :limit => 1000,                 :null => false
+    t.string   "hashed_password", :limit => 40,                   :null => false
+    t.string   "Bio",             :limit => 140,  :default => ""
+    t.string   "pictureURL",                      :default => ""
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "salt",            :limit => 225
   end
+
+  create_table "users_roles", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
 
 end

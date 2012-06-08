@@ -1,5 +1,6 @@
-
+require 'digest/sha1'
 class User < ActiveRecord::Base
+	rolify
 	has_many :messages
 	has_many :conversations, :through => :user_conversation_mm_tables
 	
@@ -9,26 +10,58 @@ class User < ActiveRecord::Base
 	has_many :followers, :foreign_key => "follower_id"
 	has_many :follows, :foreign_key => "follow_id"
 	
-	validates :password, :length => { :in => 6..200 }
+	#attr_accessor :password
+	
+	#before_save :create_hashed_password
+	#after_save :clear_password
+	
 	validates :Bio, :length => { :maximum => 160 }
 	
-	validates_presence_of :email,  :password, :first_name, :last_name
+	validates_presence_of :email, :first_name, :last_name
+	#on create means only when the record is being created, i think it suspends the check if we're trying to update
+	validates_length_of :hashed_password, :within => 8..25, :on => :create
+	validates_length_of :hashed_password, :within => 8..25, :on => :update
+	
 	validates :email, :uniqueness => { :case_sensitive => false }
 	
 	#i just grabbed this from a website, not sure if it actually works lol
 	validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
+	
+	#protects from illegal mass assignment
+	attr_accessible :first_name, :last_name, :email, :hashed_password, :Bio, :pictureURL #, :salt	
+		
+	def self.make_salt(username = "")
+		#username gives us unique salt and Time.now gives us random salt
+		Digest::SHA1.hexdigest("Use #{username} with #{Time.now} to make salt")
+	end
 
-	############################################################################
+
+    def self.hash_with_salt(hash_password ="")
+    	Digest::SHA1.hexdigest("Put on the #{hash_password}")
+    end
+
 	#returns record if authenticated else returns false
 	def self.authenticate(email = "", incomingPassword = "")
 		myUser = User.find_by_email(email)
-		if myUser && myUser.password == incomingPassword
+		if myUser && myUser.hashed_password ==  incomingPassword #self.hash_with_salt(incomingPassword)
 			return myUser
 		else
 			return false
 		end
 	
-	end
-	############################################################################
+	end	
 	
+	#private
+	#def create_hashed_password
+		#if blank then dont run this code because i assume you are not trying to update the password
+		#and the validates password on create protectes me from a blank password
+	#	unless password.blank?
+	#		self.salt = User.make_salt(email) if salt.blank?
+	#		self.hashed_password = User.hash_with_salt(password,salt)
+	#	end
+	#end
+	
+	#def clear_password
+	#	self.password = nil
+	#end
 end

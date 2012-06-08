@@ -6,7 +6,7 @@
 <td>Last Name</td>
 <td> Email address</td>
 </tr>
-<% @allUser.each do |user| %>
+<% @user.each do |user| %>
 <tr>
 	<td><%= link_to user.id, :controller => "user", :action => "show", :id => user.id  %></td>
 	<td><%= user.first_name %></td>
