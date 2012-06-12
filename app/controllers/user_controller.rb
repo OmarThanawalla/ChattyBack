@@ -1,5 +1,8 @@
 class UserController < ApplicationController
-before_filter :confirm_logged_in, :except => [:new, :create]
+#before_filter :confirm_logged_in, :except => [:new, :create]
+  #http_basic_authenticate_with :name => "DWade@yahoo.com", :password => "secretPassword"
+  before_filter :check_logged_in
+  
 load_and_authorize_resource
 skip_load_resource :only => :index
 
@@ -35,11 +38,17 @@ skip_load_resource :only => :index
 	
 	#GET	/user/:id		display a specific user
 	def show #show me more information about a specific user
-	 if proofIdent() == true
-	  	 render "show"
-	 else
-	  	 redirect_to :controller => "login", :action => "index"
-	  end	 
+	 #if proofIdent() == true
+	 	@test = "okay you got to the user/id action"
+	 	puts "wer;e about to find out who current_user is"
+	 	#puts current_user
+	  	#render :json => @user 
+	  	 #render "show"
+	 #else
+	 #	@test = "Okay  you still got to the user/id show action"
+	 #	render :json => @test
+	  	# redirect_to :controller => "login", :action => "index"
+	  #end	 
 	end
 	
 	#returns a form with the user credentials so i can edit them
