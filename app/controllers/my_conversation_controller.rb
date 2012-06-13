@@ -1,6 +1,6 @@
 class MyConversationController < ApplicationController
 #before_filter :confirm_logged_in
-  before_filter :check_logged_in
+
 	# GET /my_conversation
 	def index
 	  #get a list of the 20 most recent conversations for the user

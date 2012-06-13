@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
 	#protects from illegal mass assignment
 	attr_accessible :first_name, :last_name, :email, :hashed_password, :Bio, :pictureURL #, :salt	
 		
+		
+		
 	def self.make_salt(username = "")
 		#username gives us unique salt and Time.now gives us random salt
 		Digest::SHA1.hexdigest("Use #{username} with #{Time.now} to make salt")

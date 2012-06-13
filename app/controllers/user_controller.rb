@@ -1,17 +1,15 @@
 class UserController < ApplicationController
-#before_filter :confirm_logged_in, :except => [:new, :create]
-  #http_basic_authenticate_with :name => "DWade@yahoo.com", :password => "secretPassword"
-  before_filter :check_logged_in
+	before_filter :confirm_logged_in, :except => [:new, :create]
   
 load_and_authorize_resource
-skip_load_resource :only => :index
+#skip_load_resource :only => :index
 
-	def index #show me a list of users
+	#def index #show me a list of users
 	  #find out who are you
-	  @user = User.find(session[:user_id])
-	  @users = User.all()
-	  render "index"
-	end
+	  #@user = User.find(session[:user_id])
+	  #@users = User.all()
+	 # render "index"
+	#end
 	
 	#GET	/user/new
 	def new #a form to create a new user
@@ -38,27 +36,29 @@ skip_load_resource :only => :index
 	
 	#GET	/user/:id		display a specific user
 	def show #show me more information about a specific user
-	 #if proofIdent() == true
-	 	@test = "okay you got to the user/id action"
-	 	puts "wer;e about to find out who current_user is"
-	 	#puts current_user
-	  	#render :json => @user 
+	 if proofIdent() == true
+	 	#@test = "okay you got to the user/id action"
+	  	render :json => @user
 	  	 #render "show"
+	 else
+	 	render :file => "public/401.html", :status => :unauthorized
 	 #else
 	 #	@test = "Okay  you still got to the user/id show action"
 	 #	render :json => @test
-	  	# redirect_to :controller => "login", :action => "index"
-	  #end	 
+	  	 #redirect_to :controller => "login", :action => "index"
+	  end	 
 	end
 	
 	#returns a form with the user credentials so i can edit them
 	#GET	/user/:id/edit	return an HTML form for editing a photo
 	def edit #give me a form with the user in question so that i may edit his information
 		if proofIdent() == true
-		   @user.hashed_password = ""
-	  	   render "edit"
+		   #@user.hashed_password = ""
+	  	   #render "edit"
+	  	   @test = "you can see me"
+	  	   render :json => @test
 	 	else
-	  	   redirect_to :controller => "login", :action => "index"
+	 		render :file => "public/401.html", :status => :unauthorized
 	  	end	 
 	end
 	
