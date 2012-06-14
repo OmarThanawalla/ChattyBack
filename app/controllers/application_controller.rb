@@ -29,5 +29,13 @@ class ApplicationController < ActionController::Base
 		end
 		return false
 	end
+	
+	protected
+	def whoAreYou
+		myUser = User.find_by_email(params[:email])
+		if myUser && myUser.hashed_password == params[:password]
+			return myUser.id
+		end
+	end
 
 end
