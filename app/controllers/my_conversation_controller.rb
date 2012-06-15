@@ -1,6 +1,7 @@
 class MyConversationController < ApplicationController
-#before_filter :confirm_logged_in
+before_filter :confirm_logged_in
 
+	#returns a list of conversations that the user is a part of
 	def index
 	userID = whoAreYou()
 	 #get a list of the 20 most recent conversations for the user
