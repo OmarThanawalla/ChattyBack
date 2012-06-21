@@ -53,6 +53,37 @@ class User < ActiveRecord::Base
 	
 	end	
 	
+	def self.searchUsers(query)
+		results = nil
+		queryList = query.split()
+			#a first name AND last name were queried
+		if queryList.length >= 2
+			firstName = queryList[0]
+			lastName = queryList[1]
+			results = User.where({:first_name => firstName, :last_name => lastName})
+			
+			#a first OR last name was queried
+		else
+			name = queryList[0]
+			firstNameResults = User.where(:last_name => name)
+			lastNameResults = User.where(:first_name => name)
+			#append results in a list
+			results = firstNameResults + lastNameResults
+		end
+		#clear important attributes if a list of users is found
+		if results[0] != nil
+				results.each do |user|
+					user.email = nil
+					user.hashed_password = nil
+					user.last_sign_in_ip = nil
+					user.reset_password_token = nil
+					user.salt = nil
+					user.sign_in_count = nil
+				end
+		end
+		return results
+	end
+	
 	#private
 	#def create_hashed_password
 		#if blank then dont run this code because i assume you are not trying to update the password

@@ -1,6 +1,7 @@
 class MessageController < ApplicationController
-before_filter :confirm_logged_in
+#before_filter :confirm_logged_in
 
+	
 	def index
 	  render "index"
 	end
@@ -9,7 +10,7 @@ before_filter :confirm_logged_in
 	  render "new"
 	end
 	
-	#handles the create action
+	#CREATES MESSAGE AND CONVERSATION
 	def create
 	userID = whoAreYou()
 	
@@ -21,8 +22,9 @@ before_filter :confirm_logged_in
 		myHookup = UserConversationMmTable.create(:conversation_id => myConvo.id, :user_id => userID)
 		#create the message and link it to the convo record and user record
 		myMessage = Message.create(:user_id => userID, :conversation_id => myConvo.id, :message_content => params[:message])
-		@confirmation = "Message Sent"
+		@confirmation = ["Message Sent"] #i lost one hour on this stupid error, not putting message sent in brackets lol.
 		render :json => @confirmation
+		#redirect_to => (:action => "index")
 	end
 	end
 	

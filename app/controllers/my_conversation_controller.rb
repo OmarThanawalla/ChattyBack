@@ -17,8 +17,42 @@ before_filter :confirm_logged_in
 			  #append the most recent message
 			  mostRecentMessageForEachConversation << myMessage[0]
 		  end
-		  @conversations = mostRecentMessageForEachConversation
-		  render :json => @conversations
+		  
+		  
+		  @myJSON=[]
+		 	#store message object attributes in a a dictionary
+			mostRecentMessageForEachConversation.each do |message|
+				diction = {}
+				diction[:conversation_id] = message.conversation_id
+				#look up all participants in the conversation
+					linkingUserConvoList = UserConversationMmTable.where(:conversation_id => message.conversation_id)
+					#iterate this list to find the names of the users
+					recipient = ""
+					linkingUserConvoList.each do |record|
+						myUser = User.find(record.user_id) #find the user
+						firstName = myUser.first_name
+						name = firstName + ". " 
+						recipient << name
+					end
+				diction[:recipient] = recipient	
+				diction[:created_at] = message.created_at
+				diction[:id] = message.id
+				diction[:message_content] = message.message_content
+				diction[:user_id] = message.user_id
+					#look up the user's name
+					myUser = User.find(message.user_id)
+					firstName = myUser.first_name
+					lastName = myUser.last_name
+					name = firstName + " " + lastName
+				diction[:full_name] = name
+				#append the dictionary into the array
+				@myJSON << diction
+			end
+			
+		 render :json => @myJSON
+		 	
+		  
+		  
 	end
 
 	def new

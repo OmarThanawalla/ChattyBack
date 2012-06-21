@@ -1,12 +1,15 @@
-class ConversationController < ApplicationController
+class InnerConversationController < ApplicationController
 before_filter :confirm_logged_in
+
+
 	
-	#GET ALL conversations
+	#GET inner circle conversations
 	def index
 		userID = whoAreYou()
 		#grab a list of the users friends
 									#change this to userID
-		myListofFriends = Follow.where(:user_id => userID)
+														
+		myListofFriends = Follow.where({:user_id => userID, :Favorite => true}) #only grab friends who are my favorite
 		#this will hold a collection of most recent messages for each of the user's friends
 		myFriendsConversations =[]
 	   	myListofFriends.each do |friend|
@@ -25,8 +28,7 @@ before_filter :confirm_logged_in
 		end
 		
 		
-		
-		
+		#######################################################################################################################
 		#i must also append to myFriendsConversations list the conversations that I am involved in as well
 												#change this to userID
 		myConvo = UserConversationMmTable.where({:user_id => userID}).order("updated_at DESC").limit(20)
@@ -39,24 +41,20 @@ before_filter :confirm_logged_in
 			  #append the most recent message
 			  myFriendsConversations << myMessage[0]
 		 end
+		 #######################################################################################################################
+		 
+		 
 		 #sort the messages by created at with most recent coming up first
 		 myFriendsConversations.sort_by!{|message| message.created_at}.reverse!
 		 #deliver only 25 messages to the user
-		 myFriendsConversations = myFriendsConversations.take(25)
-		 @clumped = myFriendsConversations
-		 
-		 
-		 
-		 
-		 
+		 myFriendsConversations = myFriendsConversations.take(25)		 
 		 #create JSON
 		 @myJSON=[]
 		 	#store message object attributes in a a dictionary
 			myFriendsConversations.each do |message|
 				diction = {}
 				diction[:conversation_id] = message.conversation_id
-					#look up all participants in the conversation
-					linkingUserConvoList = UserConversationMmTable.where(:conversation_id => message.conversation_id)
+				linkingUserConvoList = UserConversationMmTable.where(:conversation_id => message.conversation_id)
 					#iterate this list to find the names of the users
 					recipient = ""
 					linkingUserConvoList.each do |record|
@@ -109,4 +107,5 @@ before_filter :confirm_logged_in
 	def destroy
 	end
 	
+
 end
