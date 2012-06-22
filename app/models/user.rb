@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
 	
 	end	
 	
-	def self.searchUsers(query)
+	def self.searchUsers(query,userID)
 		results = nil
 		queryList = query.split()
 			#a first name AND last name were queried
@@ -70,6 +70,14 @@ class User < ActiveRecord::Base
 			#append results in a list
 			results = firstNameResults + lastNameResults
 		end
+		#you can't return yourself as a user because you shouldn't be able to follow yourself, that would be weird
+		#check results to see if you are in the results, if so then delete user object from results
+		results.each_index do |index|
+			if results[index].id == userID.id #if you are in the results 
+				results.delete_at(index)
+			end
+		end
+
 		#clear important attributes if a list of users is found
 		if results[0] != nil
 				results.each do |user|
