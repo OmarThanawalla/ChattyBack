@@ -37,7 +37,7 @@ class LoginController < ApplicationController
 			#puts "djhflkasjhdfklasjdhflkasjhdfkljashdf"
 			#puts params.keys
 			
-			@test = "if you can see this then you successfully logged in"
+			@test = ["if you can see this then you successfully logged in"]
 			render :json => @test
 			#redirect_to(:action => "menu")
 		#else
