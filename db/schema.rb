@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608195133) do
+ActiveRecord::Schema.define(:version => 20120612212808) do
 
   create_table "conversations", :force => true do |t|
     t.datetime "created_at"
@@ -35,9 +35,9 @@ ActiveRecord::Schema.define(:version => 20120608195133) do
   end
 
   create_table "messages", :force => true do |t|
-    t.text     "message_content", :limit => 255, :null => false
-    t.integer  "user_id",                        :null => false
-    t.integer  "conversation_id",                :null => false
+    t.text     "message_content", :null => false
+    t.integer  "user_id",         :null => false
+    t.integer  "conversation_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,16 +61,27 @@ ActiveRecord::Schema.define(:version => 20120608195133) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "first_name",      :limit => 25,                   :null => false
-    t.string   "last_name",       :limit => 50,                   :null => false
-    t.string   "email",           :limit => 1000,                 :null => false
-    t.string   "hashed_password", :limit => 40,                   :null => false
-    t.string   "Bio",             :limit => 140,  :default => ""
-    t.string   "pictureURL",                      :default => ""
+    t.string   "first_name",             :limit => 25,                   :null => false
+    t.string   "last_name",              :limit => 50,                   :null => false
+    t.string   "email",                  :limit => 1000,                 :null => false
+    t.string   "hashed_password",        :limit => 40,                   :null => false
+    t.string   "Bio",                    :limit => 140,  :default => ""
+    t.string   "pictureURL",                             :default => ""
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "salt",            :limit => 225
+    t.string   "salt",                   :limit => 225
+    t.string   "encrypted_password",                     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
+
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "users_roles", :id => false, :force => true do |t|
     t.integer "user_id"

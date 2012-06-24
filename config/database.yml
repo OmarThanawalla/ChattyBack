@@ -12,9 +12,9 @@ development:
   adapter: postgresql
   encoding: utf8
   reconnect: false
-  database: shawsome_development
+  database: chattybackend_development
   pool: 5
-  username: shawsome
+  username: omar
   password: 
   #socket: /tmp/mysql.sock
 
@@ -25,9 +25,9 @@ test:
   adapter: postgresql
   encoding: utf8
   reconnect: false
-  database: shawsome_test
+  database: chattybackend_test
   pool: 5
-  username: shawsome
+  username: omar
   password:
   #socket: /tmp/mysql.sock
 
@@ -35,7 +35,7 @@ production:
   adapter: postgresql
   encoding: utf8
   reconnect: false
-  database: chattyBackend_production
+  database: chattybackend_production
   pool: 5
   username: root
   password:
