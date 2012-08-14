@@ -60,13 +60,16 @@ class User < ActiveRecord::Base
 		if queryList.length >= 2
 			firstName = queryList[0]
 			lastName = queryList[1]
+			firstName = firstName.capitalize()
+			lastName = lastName.capitalize()
 			results = User.where({:first_name => firstName, :last_name => lastName})
 			
 			#a first OR last name was queried
 		else
 			name = queryList[0]
-			firstNameResults = User.where(:last_name => name)
-			lastNameResults = User.where(:first_name => name)
+			name = name.capitalize()
+			lastNameResults = User.where(:last_name => name)
+			firstNameResults = User.where(:first_name => name)
 			#append results in a list
 			results = firstNameResults + lastNameResults
 		end

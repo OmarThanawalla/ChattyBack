@@ -1,41 +1,51 @@
 class UserController < ApplicationController
-	before_filter :confirm_logged_in, :except => [:new, :create]
+	#before_filter :confirm_logged_in, :except => [:new, :create]
   
-load_and_authorize_resource
+#load_and_authorize_resource
 #skip_load_resource :only => :index
 
-	#def index #show me a list of users
+	def index #show me a list of users
 	  #find out who are you
 	  #@user = User.find(session[:user_id])
 	  #@users = User.all()
 	 # render "index"
-	#end
+	 @test = ["you can see this index"]
+	  render :json => @test
+	end
 	
 	#GET	/user/new
 	def new #a form to create a new user
-	  render "new"
+	  @test = ["you can see this new"]
+	  render :json => @test
 	end
 	
-	#this just handles the entry and then redirects to index method
 	#POST
-	def create #the process of creating the new user
-		#params[:user] is a hash that I can get for key values :Bio, :first_name, :password etc.
-		
-		#params[:user][:hashed_password] = User.hash_with_salt(params[:user][:hashed_password])
-		@user = User.new(params[:user])
-		#any new user is a normalUser, I probably want to put this in the model?
-		@user.add_role :normalUser
-		if @user.save == true
-			#redirect to index
-			redirect_to :controller => "login", :action => "logout"
+	def create 
+		email = params[:email]
+		password = params[:password]
+		userName = params[:userName]
+		firstName = params[:firstName]
+		lastName = params[:lastName]
+		bio = params[:Bio]
+		#create a new record and save
+		puts "sdajfl;kasdjfl;askjdfl;askdjfal;sdkjf"
+		puts userName
+		myUser = User.new(:email => email, :hashed_password => password, :first_name => firstName, :last_name => lastName, :Bio => bio)
+		myUser.userName = userName
+		puts userName
+		recordSave = myUser.save
+		if recordSave
+			response = ["YES"]
+			render :json => response
 		else
-			@user.hashed_password = ""			
-			render "new"
+			response =["NO"]
+			render :json => response
 		end
+		
 	end
 	
 	#GET	/user/:id		display a specific user
-	def show #show me more information about a specific user
+	def show 
 	 if proofIdent() == true
 	 	#@test = "okay you got to the user/id action"
 	  	render :json => @user

@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-	#before_filter :confirm_logged_in #, :except => [:login, :attempt_login, :logout]
+	before_filter :confirm_logged_in 
 	
 	#this doesnt really do anything
 	def index
