@@ -9,7 +9,7 @@ class UserController < ApplicationController
 	  #@user = User.find(session[:user_id])
 	  #@users = User.all()
 	 # render "index"
-	 @test = ["you can see this index"]
+	 @test = ["you can see this index sexy"]
 	  render :json => @test
 	end
 	

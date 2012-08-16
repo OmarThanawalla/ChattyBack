@@ -4,6 +4,7 @@ before_filter :confirm_logged_in
 		#user sends a request to follow someone
 	def index
 		userID = whoAreYou()
+		#targetFollow contains the userID for the person 
 	  	targetUser = params[:targetFollow]
 	  	
 	  	#make a request to follow someone by creating a record in the Followers table and setting confirmed to 0

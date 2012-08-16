@@ -21,9 +21,9 @@ before_filter :confirm_logged_in
 				if length == 0 #because no records were found
 					areWeFriends = "NO"
 				else
-					areWeFriends = "YES"
+					areWeFriends = "YES" #what this really means is have I asked to be friends, not are we really friends
 				end
-			diction[:is_friend] = areWeFriends
+			diction[:is_friend] = areWeFriends #see above comment
 			puts diction[:is_friend]
 			@myJSON << diction		
 		end

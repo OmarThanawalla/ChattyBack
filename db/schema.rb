@@ -18,17 +18,19 @@ ActiveRecord::Schema.define(:version => 20120625202023) do
     t.datetime "updated_at"
   end
 
+#manages my followers
   create_table "followers", :force => true do |t|
-    t.integer  "user_id",                        :null => false
-    t.integer  "follower_id",                    :null => false
+    t.integer  "user_id",                        :null => false #me
+    t.integer  "follower_id",                    :null => false #the dudes who follow me
     t.boolean  "Confirmed",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+#manages who I follow
   create_table "follows", :force => true do |t|
-    t.integer  "user_id",                       :null => false
-    t.integer  "follow_id",                     :null => false
+    t.integer  "user_id",                       :null => false #me
+    t.integer  "follow_id",                     :null => false #the dudes I follow
     t.boolean  "Favorite",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"

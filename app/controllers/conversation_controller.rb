@@ -5,7 +5,7 @@ before_filter :confirm_logged_in
 	def index
 		userID = whoAreYou()
 		#grab a list of the users friends
-									#change this to userID
+									#change this to userID						
 		myListofFriends = Follow.where(:user_id => userID)
 		#this will hold a collection of most recent messages for each of the user's friends
 		myFriendsConversations =[]

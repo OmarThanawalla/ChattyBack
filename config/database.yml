@@ -12,7 +12,7 @@ development:
   adapter: postgresql
   encoding: utf8
   reconnect: false
-  database: chattybackend_development
+  database: chattyDevelopment
   pool: 5
   username: omar
   password: 
