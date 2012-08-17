@@ -16,12 +16,17 @@ class MessageController < ApplicationController
 	
 	#make sure message is valid
 	if params[:message] != "" && params[:message].length >= 1
+		
+		
 		#create a conversation record
 		myConvo = Conversation.create
+		
 		#create a linking record in UserConversation.. Table
 		myHookup = UserConversationMmTable.create(:conversation_id => myConvo.id, :user_id => userID)
+		
 		#create the message and link it to the convo record and user record
 		myMessage = Message.create(:user_id => userID, :conversation_id => myConvo.id, :message_content => params[:message])
+		
 		@confirmation = ["Message Sent"] #i lost one hour on this stupid error, not putting message sent in brackets lol.
 		render :json => @confirmation
 		#redirect_to => (:action => "index")
