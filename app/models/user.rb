@@ -17,12 +17,13 @@ class User < ActiveRecord::Base
 	
 	validates :Bio, :length => { :maximum => 160 }
 	
-	validates_presence_of :email, :first_name, :last_name
+	validates_presence_of :email, :first_name, :last_name, :userName
 	#on create means only when the record is being created, i think it suspends the check if we're trying to update
 	validates_length_of :hashed_password, :within => 8..25, :on => :create
 	validates_length_of :hashed_password, :within => 8..25, :on => :update
 	
 	validates :email, :uniqueness => { :case_sensitive => false }
+	validates :userName, :uniqueness => { :case_sensitive => false }
 	
 	#i just grabbed this from a website, not sure if it actually works lol
 	validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create

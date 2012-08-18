@@ -1,9 +1,10 @@
 class ConversationController < ApplicationController
-before_filter :confirm_logged_in
+#before_filter :confirm_logged_in
 	
 	#GET ALL conversations
 	def index
-		userID = whoAreYou()
+		#userID = whoAreYou()
+		userID = 1
 		#grab a list of the users friends
 									#change this to userID						
 		myListofFriends = Follow.where(:user_id => userID)
@@ -41,6 +42,18 @@ before_filter :confirm_logged_in
 		 end
 		 #sort the messages by created at with most recent coming up first
 		 myFriendsConversations.sort_by!{|message| message.created_at}.reverse!
+		 
+		 #remove doubles (conversations) because multiple friends in same conversation
+		 
+		 for i in 0...myFriendsConversations.length-1
+		 	if myFriendsConversations[i].conversation_id == myFriendsConversations[i+1].conversation_id
+		 		#myFriendsConversations.delete_at(i)
+		 		puts "we got a match!"
+		 	end
+		 end
+		 
+		 
+		 
 		 #deliver only 25 messages to the user
 		 myFriendsConversations = myFriendsConversations.take(25)
 		 @clumped = myFriendsConversations
