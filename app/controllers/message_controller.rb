@@ -22,8 +22,6 @@ class MessageController < ApplicationController
 		myConvo = Conversation.create
 		
 		#create a linking record in UserConversation..MM Table
-		puts "the user is "
-		puts userID
 		myHookup = UserConversationMmTable.create(:conversation_id => myConvo.id, :user_id => userID)
 		
 		#create the message and link it to the convo record and user record
@@ -44,6 +42,8 @@ class MessageController < ApplicationController
 				end
 			end
 		end
+		
+		#Last Step: Apple Push notification to everyone with @<username> in the content of the message
 		
 		@confirmation = ["Message Sent"] #i lost one hour on this stupid error, not putting message sent in brackets lol.
 		render :json => @confirmation

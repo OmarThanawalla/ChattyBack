@@ -4,6 +4,8 @@ before_filter :confirm_logged_in
 	#GET ALL conversations
 	def index
 		userID = whoAreYou()
+		puts "kja;slkdj;laskdjf;laskjdf;laskjdf;alskjdfal;skdjfl;askjdfal;sdf"
+		puts userID
 		#grab a list of the users friends
 									#change this to userID						
 		myListofFriends = Follow.where(:user_id => userID)
@@ -40,7 +42,7 @@ before_filter :confirm_logged_in
 			  myFriendsConversations << myMessage[0]
 		 end
 		 #sort the messages by created at with most recent coming up first
-		 myFriendsConversations.sort_by!{|message| message.created_at}.reverse!
+		 myFriendsConversations.sort_by!{|message| message.created_at}.reverse!		#this will give an older conversation with a more recent message higher on the list because it will sort ahead of the newer conversation but with a message not as new as an older conversation
 		 
 		 #remove doubles (conversations) because multiple friends in same conversation
 		 myFriendsConversationNoDoubles = []
@@ -48,7 +50,6 @@ before_filter :confirm_logged_in
 			flag = false
 			myFriendsConversationNoDoubles.each do |object2|
 				if object.conversation_id == object2.conversation_id
-				puts "i hit the true"
 					flag = true
 					break
 				end
