@@ -22,6 +22,8 @@ class MessageController < ApplicationController
 		myConvo = Conversation.create
 		
 		#create a linking record in UserConversation..MM Table
+		puts "the user is "
+		puts userID
 		myHookup = UserConversationMmTable.create(:conversation_id => myConvo.id, :user_id => userID)
 		
 		#create the message and link it to the convo record and user record
@@ -33,9 +35,11 @@ class MessageController < ApplicationController
 		messageList.each do |word|
 		
 			if word[0] == "@"
-				#theUserName = word[0,word.length]
 				myUser = User.where(:userName => word)
+				#if its a real user then make the entry
 				if myUser != nil && myUser.length != 0
+					puts myUser[0].id
+					#model validations and a postgresql index will make sure user cannot be in the same convo twice
 					UserConversationMmTable.create(:user_id => myUser[0].id, :conversation_id => myConvo.id)
 				end
 			end

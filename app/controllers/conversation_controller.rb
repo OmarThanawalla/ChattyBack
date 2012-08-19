@@ -1,10 +1,9 @@
 class ConversationController < ApplicationController
-#before_filter :confirm_logged_in
+before_filter :confirm_logged_in
 	
 	#GET ALL conversations
 	def index
-		#userID = whoAreYou()
-		userID = 1
+		userID = whoAreYou()
 		#grab a list of the users friends
 									#change this to userID						
 		myListofFriends = Follow.where(:user_id => userID)
@@ -44,28 +43,29 @@ class ConversationController < ApplicationController
 		 myFriendsConversations.sort_by!{|message| message.created_at}.reverse!
 		 
 		 #remove doubles (conversations) because multiple friends in same conversation
-		 
-		 for i in 0...myFriendsConversations.length-1
-		 	if myFriendsConversations[i].conversation_id == myFriendsConversations[i+1].conversation_id
-		 		#myFriendsConversations.delete_at(i)
-		 		puts "we got a match!"
-		 	end
+		 myFriendsConversationNoDoubles = []
+		 myFriendsConversations.each do |object|
+			flag = false
+			myFriendsConversationNoDoubles.each do |object2|
+				if object.conversation_id == object2.conversation_id
+				puts "i hit the true"
+					flag = true
+					break
+				end
+			end
+			if flag == false
+				myFriendsConversationNoDoubles << object
+			end
 		 end
-		 
-		 
-		 
+
 		 #deliver only 25 messages to the user
-		 myFriendsConversations = myFriendsConversations.take(25)
-		 @clumped = myFriendsConversations
-		 
-		 
-		 
+		 myFriendsConversationNoDoubles = myFriendsConversationNoDoubles.take(25)
 		 
 		 
 		 #create JSON
 		 @myJSON=[]
 		 	#store message object attributes in a a dictionary
-			myFriendsConversations.each do |message|
+			myFriendsConversationNoDoubles.each do |message|
 				diction = {}
 				diction[:conversation_id] = message.conversation_id
 					#look up all participants in the conversation
@@ -92,7 +92,7 @@ class ConversationController < ApplicationController
 				#append the dictionary into the array
 				@myJSON << diction
 			end
-			
+		puts @myJSON.length	
 		 render :json => @myJSON
 		 	
 	end

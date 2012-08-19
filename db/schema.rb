@@ -11,26 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625202023) do
+ActiveRecord::Schema.define(:version => 20120817193826) do
 
   create_table "conversations", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-#manages my followers
   create_table "followers", :force => true do |t|
-    t.integer  "user_id",                        :null => false #me
-    t.integer  "follower_id",                    :null => false #the dudes who follow me
+    t.integer  "user_id",                        :null => false
+    t.integer  "follower_id",                    :null => false
     t.boolean  "Confirmed",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-#manages who I follow
   create_table "follows", :force => true do |t|
-    t.integer  "user_id",                       :null => false #me
-    t.integer  "follow_id",                     :null => false #the dudes I follow
+    t.integer  "user_id",                       :null => false
+    t.integer  "follow_id",                     :null => false
     t.boolean  "Favorite",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -62,6 +60,8 @@ ActiveRecord::Schema.define(:version => 20120625202023) do
     t.datetime "updated_at"
   end
 
+  add_index "user_conversation_mm_tables", ["user_id", "conversation_id"], :name => "noRepeats", :unique => true
+
   create_table "users", :force => true do |t|
     t.string   "first_name",             :limit => 25,                   :null => false
     t.string   "last_name",              :limit => 50,                   :null => false
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20120625202023) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "userName"				
+    t.string   "userName"
   end
 
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

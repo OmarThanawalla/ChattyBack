@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 	validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
 	
 	#protects from illegal mass assignment
-	attr_accessible :first_name, :last_name, :email, :hashed_password, :Bio, :pictureURL #, :salt	
+	attr_accessible :first_name, :last_name, :email, :hashed_password, :Bio, :pictureURL, :userName #, :salt	
 		
 		
 		
