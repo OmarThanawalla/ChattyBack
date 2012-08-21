@@ -4,8 +4,7 @@ before_filter :confirm_logged_in
 	#GET ALL conversations
 	def index
 		userID = whoAreYou()
-		puts "kja;slkdj;laskdjf;laskjdf;laskjdf;alskjdfal;skdjfl;askjdfal;sdf"
-		puts userID
+		
 		#grab a list of the users friends
 									#change this to userID						
 		myListofFriends = Follow.where(:user_id => userID)
