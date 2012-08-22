@@ -63,10 +63,7 @@ before_filter :confirm_logged_in
 	end
 	
 	
-	
-	#def show
-	 # render "show"
-	#end
+
 
 
 
