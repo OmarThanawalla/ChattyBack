@@ -8,7 +8,7 @@
 
  User.create(:first_name => "Omar", :last_name => "Thanawalla", :email => "omar.thanawalla@gmail.com", :hashed_password => "secretPassword", :userName => "@omar")
  User.create(:first_name => "Dwayne", :last_name => "Wade", :email => "dwade@yahoo.com", :hashed_password => "secretPassword", :userName => "@wade")
- User.create(:first_name => "Michael", :last_name => "Jackson", :email => "mj@google.com", :hashed_password => "secretPassword", :userName => "mj")
+ User.create(:first_name => "Michael", :last_name => "Jackson", :email => "mj@google.com", :hashed_password => "secretPassword", :userName => "@mj")
  
  #get handles for user_id and follow_id
  

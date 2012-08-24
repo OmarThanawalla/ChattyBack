@@ -13,6 +13,7 @@ before_filter :confirm_logged_in
 			diction ={}
 			diction[:first_name] = user.first_name
 			diction[:last_name] = user.last_name
+			diction[:userName] = user.userName
 			diction[:Bio] = user.Bio
 			diction[:id] = user.id
 				#test for followingship
