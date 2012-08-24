@@ -45,6 +45,7 @@ before_filter :confirm_logged_in
 					lastName = myUser.last_name
 					name = firstName + " " + lastName
 				diction[:full_name] = name
+				diction[:userName] = myUser.userName
 				#append the dictionary into the array
 				@myJSON << diction
 			end

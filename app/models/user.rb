@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
 	validates_length_of :hashed_password, :within => 8..25, :on => :create
 	validates_length_of :hashed_password, :within => 8..25, :on => :update
 	
+	#make sure email and userName are valid for each user
 	validates :email, :uniqueness => { :case_sensitive => false }
 	validates :userName, :uniqueness => { :case_sensitive => false }
 	

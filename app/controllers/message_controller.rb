@@ -33,7 +33,8 @@ before_filter :confirm_logged_in
 		messageList.each do |word|
 		
 			if word[0] == "@"
-				myUser = User.where(:userName => word)
+				wordLowered = word.downcase
+				myUser = User.where(:userName => wordLowered)
 				#if its a real user then make the entry
 				if myUser != nil && myUser.length != 0
 					puts myUser[0].id

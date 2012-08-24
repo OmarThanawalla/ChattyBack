@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   protected #so it cant be called as an action
 	def confirm_logged_in
 		#here is where I have to ask for username and password. authenticate everywhere
-		myUser = User.find_by_email(params[:email])
+		emailDowncase = params[:email].downcase
+		myUser = User.find_by_email(emailDowncase)
 		if myUser && myUser.hashed_password == params[:password]
 			return true
 		else
@@ -32,7 +33,9 @@ class ApplicationController < ActionController::Base
 	
 	protected
 	def whoAreYou
-		myUser = User.find_by_email(params[:email])
+		emailLowered = params[:email]
+		emailLowered = emailLowered.downcase
+		myUser = User.find_by_email(emailLowered)
 		if myUser && myUser.hashed_password == params[:password]
 			return myUser.id
 		end

@@ -20,6 +20,7 @@ before_filter :confirm_logged_in
 					lastName = myUser.last_name
 					name = firstName + " " + lastName
 				diction[:full_name] = name
+				diction[:userName] = myUser.userName
 				@myJSON  << diction
 			end
 			render :json => @myJSON
@@ -46,6 +47,7 @@ before_filter :confirm_logged_in
 			
 			messageList.each do |word|
 				if word[0] == "@"
+					wordLowered = word.downcase
 					myUser = User.where(:userName => word)
 					#if its a real user then make the entry
 					if myUser != nil && myUser.length != 0

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120817193826) do
+ActiveRecord::Schema.define(:version => 20120823234822) do
 
   create_table "conversations", :force => true do |t|
     t.datetime "created_at"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20120817193826) do
     t.datetime "updated_at"
   end
 
+  add_index "followers", ["user_id", "follower_id"], :name => "FollowersProtection", :unique => true
+
   create_table "follows", :force => true do |t|
     t.integer  "user_id",                       :null => false
     t.integer  "follow_id",                     :null => false
@@ -33,6 +35,8 @@ ActiveRecord::Schema.define(:version => 20120817193826) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "follows", ["user_id", "follow_id"], :name => "FollowProtection", :unique => true
 
   create_table "messages", :force => true do |t|
     t.text     "message_content", :null => false

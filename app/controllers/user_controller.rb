@@ -22,18 +22,26 @@ class UserController < ApplicationController
 	#POST
 	def create 
 		email = params[:email]
+		email = email.downcase
 		password = params[:password]
 		userName = params[:userName]
+		userName = userName.downcase
 		firstName = params[:firstName]
 		lastName = params[:lastName]
 		bio = params[:Bio]
+		
 		#create a new record and save
-		puts "sdajfl;kasdjfl;askjdfl;askdjfal;sdkjf"
-		puts userName
 		myUser = User.new(:email => email, :hashed_password => password, :first_name => firstName, :last_name => lastName, :Bio => bio)
+		#append @ to the username
+		if	userName[0] != "@"
+			userName.insert(0, "@")
+		end
+		#lowercase the userName
+		userName = userName.downcase
 		myUser.userName = userName
-		puts userName
 		recordSave = myUser.save
+		
+		
 		if recordSave
 			response = ["YES"]
 			render :json => response
