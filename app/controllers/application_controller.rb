@@ -1,12 +1,19 @@
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
   protected #so it cant be called as an action
 	def confirm_logged_in
-		#here is where I have to ask for username and password. authenticate everywhere
-		emailDowncase = params[:email].downcase
-		myUser = User.find_by_email(emailDowncase)
-		if myUser && myUser.hashed_password == params[:password]
+		password = params[:password]
+		#password = User.hash(password)
+		
+		email = params[:email]
+		
+		if email != nil
+			email = email.downcase
+		end
+		myUser = User.find_by_email(email)
+		if myUser && myUser.hashed_password == password
 			return true
 		else
 			render :file => "public/401.html", :status => :unauthorized
@@ -21,9 +28,13 @@ class ApplicationController < ActionController::Base
 
 	protected
 	def proofIdent
+		#hash the password
+		password = params[:password]
+		#password = User.hash(password)
+		
 		#is who you are and the params[:id] you are trying to access one and the same?
 		myUser = User.find_by_email(params[:email])
-		if myUser && myUser.hashed_password == params[:password]
+		if myUser && myUser.hashed_password == password
 			if myUser.id.to_i == params[:id].to_i
 				return true
 			end
@@ -33,10 +44,15 @@ class ApplicationController < ActionController::Base
 	
 	protected
 	def whoAreYou
+		#hash the password
+		password = params[:password]
+		#password = User.hash(password)
+		
 		emailLowered = params[:email]
 		emailLowered = emailLowered.downcase
+		
 		myUser = User.find_by_email(emailLowered)
-		if myUser && myUser.hashed_password == params[:password]
+		if myUser && myUser.hashed_password == password
 			return myUser.id
 		end
 	end

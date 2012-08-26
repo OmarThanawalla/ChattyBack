@@ -23,7 +23,11 @@ class UserController < ApplicationController
 	def create 
 		email = params[:email]
 		email = email.downcase
+		
+		#have to hash this password and store in the database
 		password = params[:password]
+		#password = User.hash(password)
+		
 		userName = params[:userName]
 		userName = userName.downcase
 		firstName = params[:firstName]
@@ -36,6 +40,7 @@ class UserController < ApplicationController
 		if	userName[0] != "@"
 			userName.insert(0, "@")
 		end
+		
 		#lowercase the userName
 		userName = userName.downcase
 		myUser.userName = userName

@@ -1,4 +1,4 @@
-require 'digest/sha1'
+#require 'digest/sha1'
 class User < ActiveRecord::Base
 	rolify
 	has_many :messages
@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
 	
 	validates_presence_of :email, :first_name, :last_name, :userName
 	#on create means only when the record is being created, i think it suspends the check if we're trying to update
-	validates_length_of :hashed_password, :within => 8..25, :on => :create
-	validates_length_of :hashed_password, :within => 8..25, :on => :update
+	validates_length_of :hashed_password, :within => 8..500, :on => :create
+	validates_length_of :hashed_password, :within => 8..500, :on => :update
 	
 	#make sure email and userName are valid for each user
 	validates :email, :uniqueness => { :case_sensitive => false }
@@ -96,6 +96,14 @@ class User < ActiveRecord::Base
 		end
 		return results
 	end
+	
+	
+	#def self.hash(password = "")
+	#	Digest::SHA1.hexdigest(password)
+	#end
+	
+	
+	
 	
 	#private
 	#def create_hashed_password
