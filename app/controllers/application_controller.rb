@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protected #so it cant be called as an action
 	def confirm_logged_in
 		password = params[:password]
-		#password = User.hash(password)
+		password = User.hashMe(password)
 		
 		email = params[:email]
 		
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 	def proofIdent
 		#hash the password
 		password = params[:password]
-		#password = User.hash(password)
+		password = User.hashMe(password)
 		
 		#is who you are and the params[:id] you are trying to access one and the same?
 		myUser = User.find_by_email(params[:email])
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
 	def whoAreYou
 		#hash the password
 		password = params[:password]
-		#password = User.hash(password)
+		password = User.hashMe(password)
 		
 		emailLowered = params[:email]
 		emailLowered = emailLowered.downcase

@@ -32,28 +32,21 @@ class User < ActiveRecord::Base
 	#protects from illegal mass assignment
 	attr_accessible :first_name, :last_name, :email, :hashed_password, :Bio, :pictureURL, :userName #, :salt	
 		
-		
-		
-	def self.make_salt(username = "")
-		#username gives us unique salt and Time.now gives us random salt
-		Digest::SHA1.hexdigest("Use #{username} with #{Time.now} to make salt")
-	end
 
 
-    def self.hash_with_salt(hash_password ="")
-    	Digest::SHA1.hexdigest("Put on the #{hash_password}")
-    end
+
+
 
 	#returns record if authenticated else returns false
-	def self.authenticate(email = "", incomingPassword = "")
-		myUser = User.find_by_email(email)
-		if myUser && myUser.hashed_password ==  incomingPassword #self.hash_with_salt(incomingPassword)
-			return myUser
-		else
-			return false
-		end
-	
-	end	
+	#def self.authenticate(email = "", incomingPassword = "")
+	#	myUser = User.find_by_email(email)
+	#	if myUser && myUser.hashed_password ==  incomingPassword #self.hash_with_salt(incomingPassword)
+	#		return myUser
+	#	else
+	#		return false
+	#	end
+	#
+	#end	
 	
 	def self.searchUsers(query,userID)
 		results = nil
@@ -98,24 +91,9 @@ class User < ActiveRecord::Base
 	end
 	
 	
-	#def self.hash(password = "")
-	#	Digest::SHA1.hexdigest(password)
-	#end
+	def self.hashMe(password = "")
+		Digest::SHA1.hexdigest(password)
+	end
 	
-	
-	
-	
-	#private
-	#def create_hashed_password
-		#if blank then dont run this code because i assume you are not trying to update the password
-		#and the validates password on create protectes me from a blank password
-	#	unless password.blank?
-	#		self.salt = User.make_salt(email) if salt.blank?
-	#		self.hashed_password = User.hash_with_salt(password,salt)
-	#	end
-	#end
-	
-	#def clear_password
-	#	self.password = nil
-	#end
+
 end

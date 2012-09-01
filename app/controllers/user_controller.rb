@@ -26,7 +26,7 @@ class UserController < ApplicationController
 		
 		#have to hash this password and store in the database
 		password = params[:password]
-		#password = User.hash(password)
+		password = User.hashMe(password)
 		
 		userName = params[:userName]
 		userName = userName.downcase

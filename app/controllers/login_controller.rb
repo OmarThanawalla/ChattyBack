@@ -24,30 +24,11 @@ class LoginController < ApplicationController
 	end
 
 	def attempt_login
-		#authorized_user = User.authenticate(params[:email], params[:password])
-		#@value = authorized_user
-		
-		#if http_basic_authenticate_with :name => "DWade@yahoo.com", :password => "secretPassword"
-		#if @value
-			#mark user as logged in
-			#session[:user_id] = @value.id
-			#session[:username] = @value.email
-			#flash[:notice] = "You are now logged in."
-			
-			#puts "djhflkasjhdfklasjdhflkasjhdfkljashdf"
-			#puts params.keys
+
 			
 			@test = ["if you can see this then you successfully logged in"]
 			render :json => @test
-			#redirect_to(:action => "menu")
-		#else
-			#flash[:notice] = "Invalid username/password combination"
-			
-			#render :file => "public/401.html", :status => :unauthorized
-			#@user = "if you can see this you did NOT successfully log in"
-			#render :json => @user
-			#redirect_to(:action => 'login')
-		#end
+
 	end
 
 	def logout
