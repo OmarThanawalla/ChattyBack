@@ -45,6 +45,7 @@ before_filter :confirm_logged_in
 		end
 		
 		#Last Step: Apple Push notification to everyone with @<username> in the content of the message
+		#tell everyone in the message that had @<username> that so and so (userID) said whatever the content of the message said
 		
 		@confirmation = ["Message Sent"] #i lost one hour on this stupid error, not putting message sent in brackets lol.
 		render :json => @confirmation
